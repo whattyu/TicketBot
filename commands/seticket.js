@@ -25,6 +25,12 @@ module.exports = {
             required: true
         },
         {
+            name: "claimedcategory",
+            type: 7,
+            description: "Category for claimed tickets",
+            required: true
+        },
+        {
             name: "moderatorrole",
             type: 8,
             description: "Moderator role",
@@ -36,17 +42,19 @@ module.exports = {
         let openedCategory = guild.channels.cache.get(arrayArgs[0])
         let closedCategory = guild.channels.cache.get(arrayArgs[1])
         let archivedCategory = guild.channels.cache.get(arrayArgs[2])
+        let claimedCategory = guild.channels.cache.get(arrayArgs[3])
 
-        if(openedCategory.type != "category" || closedCategory.type != "category" || archivedCategory.type != "category") return respond({
+        if(openedCategory.type != "category" || closedCategory.type != "category" || archivedCategory.type != "category" || claimedCategory.type != "category") return respond({
             content: "You need to set categories not channels!",
             ephemeral: true
         })
 
-        await client.db.set(`guild_${guild.id}`, {
+        client.db.set(`guild_${guild.id}`, {
             openedCategory: arrayArgs[0],
             closedCategory: arrayArgs[1],
             archivedCategory: arrayArgs[2],
-            moderatorRole: arrayArgs[3]
+            claimedCategory: arrayArgs[3],
+            moderatorRole: arrayArgs[4]
         })
 
       respond({

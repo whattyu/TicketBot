@@ -52,13 +52,19 @@ module.exports = {
                 .setStyle("gray")
                 .setID(`ticket_close_${ticketChannel.id}`)
 
-            ticketChannel.Gsend(`${buttonMember.user} Welcome!`, {embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton)})
+            let claimButton = new MessageButton()
+                .setLabel("")
+                .setEmoji("📌")
+                .setStyle("gray")
+                .setID(`ticket_claim_${ticketChannel.id}`)
+
+            ticketChannel.Gsend(`${buttonMember.user} Welcome!`, {embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton).addComponent(claimButton)})
             buttonMember.send(`Your ticket has been created. ${ticketChannel}`)
         }
 
         if(button.id == `ticket_close_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1])
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
 
             let yes = new MessageButton().setLabel("").setEmoji("✅").setStyle("gray").setID(`ticket_close_yes_${buttonMember.user.id}`)
             let no = new MessageButton().setLabel("").setEmoji("❌").setStyle("gray").setID(`ticket_close_no_${buttonMember.user.id}`)
@@ -127,7 +133,7 @@ module.exports = {
 
         if(button.id == `ticket_reopen_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) ? client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) : client.users.cache.get(ticketChannel.name.split("ticket-")[1])
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
 
             let allMessages = await ticketChannel.messages.fetch()
             let systemMessages = allMessages.filter(m => m.embeds && m.author.id == client.user.id);
@@ -144,6 +150,12 @@ module.exports = {
                 .setEmoji("🔒")
                 .setStyle("gray")
                 .setID(`ticket_close_${ticketChannel.id}`)
+                
+            let claimButton = new MessageButton()
+                .setLabel("")
+                .setEmoji("📌")
+                .setStyle("gray")
+                .setID(`ticket_claim_${ticketChannel.id}`)
 
             ticketChannel.edit({
                 name: `ticket-${createdBy}`,
@@ -164,7 +176,7 @@ module.exports = {
                 ]
             })
 
-            ticketChannel.Gsend(`${createdBy} Welcome back!`, {embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton)})
+            ticketChannel.Gsend(`${createdBy} Welcome back!`, {embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton).addComponent(claimButton)})
         }
 
         if(button.id == `ticket_delete_${button.channel.id}`) {
@@ -180,7 +192,7 @@ module.exports = {
 
         if(button.id == `ticket_archive_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) ? client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) : client.users.cache.get(ticketChannel.name.split("ticket-")[1])
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
 
             let allMessages = await ticketChannel.messages.fetch()
             let systemMessages = allMessages.filter(m => m.embeds && m.author.id == client.user.id);
@@ -222,6 +234,36 @@ module.exports = {
             ticketChannel.Gsend(`${button.clicker.user} your transcript is ready!`, {
                 files: [attch]
             })
+        }
+
+        if(button.id == `ticket_claim_${button.channel.id}`) {
+            let ticketChannel = button.channel;
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
+
+            let claimEmbed = new MessageEmbed()
+                .setColor("#f5bf42")
+                .setDescription(`${button.clicker.user} claimed this ticket.`)
+
+            button.channel.edit({
+                name: `ticket-claimed-${createdBy}`,
+                parentID: guildInfo.claimedCategory,
+                permissionOverwrites: [
+                    {
+                        id: createdBy.id,
+                        deny: ["VIEW_CHANNEL"]
+                    },
+                    {
+                        id: guild.roles.everyone,
+                        deny: ["VIEW_CHANNEL"]
+                    },
+                    {
+                        id: guildInfo.moderatorRole,
+                        deny: ["SEND_MESSAGES"]
+                    }
+                ]
+            })
+
+            button.channel.Gsend("", {embeds: claimEmbed})
         }
 
         function msToTime(ms) {
