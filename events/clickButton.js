@@ -64,7 +64,7 @@ module.exports = {
 
         if(button.id == `ticket_close_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1])
 
             let yes = new MessageButton().setLabel("").setEmoji("✅").setStyle("gray").setID(`ticket_close_yes_${buttonMember.user.id}`)
             let no = new MessageButton().setLabel("").setEmoji("❌").setStyle("gray").setID(`ticket_close_no_${buttonMember.user.id}`)
@@ -133,7 +133,7 @@ module.exports = {
 
         if(button.id == `ticket_reopen_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1])
 
             let allMessages = await ticketChannel.messages.fetch()
             let systemMessages = allMessages.filter(m => m.embeds && m.author.id == client.user.id);
@@ -192,7 +192,7 @@ module.exports = {
 
         if(button.id == `ticket_archive_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1])
 
             let allMessages = await ticketChannel.messages.fetch()
             let systemMessages = allMessages.filter(m => m.embeds && m.author.id == client.user.id);
@@ -238,7 +238,7 @@ module.exports = {
 
         if(button.id == `ticket_claim_${button.channel.id}`) {
             let ticketChannel = button.channel;
-            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1]) 
+            let createdBy = client.users.cache.get(ticketChannel.name.split("ticket-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-claimed-")[1]) || client.users.cache.get(ticketChannel.name.split("ticket-closed-")[1])
 
             let claimEmbed = new MessageEmbed()
                 .setColor("#f5bf42")
