@@ -5,7 +5,7 @@
     "discord-buttons": "^3.1.1",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
-    "gcommands": "^4.1.2",
+    "gcommands": "^4.3.0",
     "keyv": "^4.0.3",
     "keyv-mongodb": "^1.0.0"
   }

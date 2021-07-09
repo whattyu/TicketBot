@@ -58,7 +58,7 @@ module.exports = {
                 .setStyle("gray")
                 .setID(`ticket_claim_${ticketChannel.id}`)
 
-            ticketChannel.Gsend(`${buttonMember.user} Welcome!`, {embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton).addComponent(claimButton)})
+            ticketChannel.send({content: `${buttonMember.user} Welcome!`, embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton).addComponent(claimButton)})
             buttonMember.send(`Your ticket has been created. ${ticketChannel}`)
         }
 
@@ -124,7 +124,7 @@ module.exports = {
                         ]
                     })
 
-                    button.channel.Gsend("", {embeds: closedEmbed, components: new MessageActionRow().addComponent(reopen).addComponent(deleteButton).addComponent(archiveButton).addComponent(transcriptButton)})
+                    button.channel.send({embeds: closedEmbed, components: new MessageActionRow().addComponent(reopen).addComponent(deleteButton).addComponent(archiveButton).addComponent(transcriptButton)})
                 } else {
                     msg.delete();
                 }
@@ -176,7 +176,7 @@ module.exports = {
                 ]
             })
 
-            ticketChannel.Gsend(`${createdBy} Welcome back!`, {embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton).addComponent(claimButton)})
+            ticketChannel.send({content: `${createdBy} Welcome back!`, embeds: supportEmbed, components: new MessageActionRow().addComponent(supportButton).addComponent(claimButton)})
         }
 
         if(button.id == `ticket_delete_${button.channel.id}`) {
@@ -221,7 +221,7 @@ module.exports = {
                 ]
             })
 
-            button.channel.Gsend("", {embeds: archiveEmbed})
+            button.channel.send({embeds: archiveEmbed})
         }
 
         if(button.id == `ticket_transcript_${button.channel.id}`) {
@@ -231,7 +231,8 @@ module.exports = {
             let systemMessages = allMessages.filter(m => m.content && m.author.id != client.user.id && !m.author.bot).map(m => msToTime(m.createdTimestamp) +" | "+ m.author.tag + ": " + m.cleanContent).join("\n");
 
             let attch = new MessageAttachment(Buffer.from(systemMessages), "transcript.txt")
-            ticketChannel.Gsend(`${button.clicker.user} your transcript is ready!`, {
+            ticketChannel.send({
+                content: `${button.clicker.user} your transcript is ready!`,
                 files: [attch]
             })
         }
@@ -263,7 +264,7 @@ module.exports = {
                 ]
             })
 
-            button.channel.Gsend("", {embeds: claimEmbed})
+            button.channel.Gsend({embeds: claimEmbed})
         }
 
         function msToTime(ms) {

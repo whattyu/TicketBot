@@ -2,7 +2,6 @@ require("dotenv").config()
 const Discord = require('discord.js')
 const { GCommands } = require("gcommands");
 const Keyv = require('keyv');
-require("./classes/TextChannel")
 const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION', 'GUILD_MEMBER']});
 
 client.db = new Keyv(); //https://www.npmjs.com/package/keyv
@@ -26,9 +25,8 @@ client.on('ready', async () => {
         defaultCooldown: 1,
     })
 
-    GCommandsClient.on("debug", (debug)=>{
-        console.log(debug)
-    })
+    GCommandsClient.on("debug", console.log)
+    GCommandsClient.on("log", console.log)
     console.log('logged in')
 })
 
