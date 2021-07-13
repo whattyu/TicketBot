@@ -233,7 +233,7 @@ module.exports = {
             let attch = new MessageAttachment(Buffer.from(systemMessages), "transcript.txt")
             ticketChannel.send({
                 content: `${button.clicker.user} your transcript is ready!`,
-                files: [attch]
+                attachments: [attch]
             })
         }
 
