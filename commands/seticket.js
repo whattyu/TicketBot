@@ -5,7 +5,7 @@ module.exports = {
     name: "setticket",
     description: "Set ticket :O",
     slash: true,
-    expectedArgs: [
+    args: [
         {
             name: "openedcategory",
             type: 7,
