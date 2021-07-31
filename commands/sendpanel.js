@@ -4,7 +4,6 @@ const { MessageButton, MessageActionRow } = require("gcommands");
 module.exports = {
     name: "sendpanel",
     description: "Send panel :O",
-    slash: false,
     userRequiredPermissions: "ADMINISTRATOR",
     run: async({client, respond}) => {
       let embed = new MessageEmbed()
