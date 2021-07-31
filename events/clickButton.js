@@ -186,7 +186,7 @@ module.exports = {
                 .setColor("#f54257")
                 .setDescription("Ticket deleted in 5s")
             
-            ticketChannel.Gsend("", {embeds: deleteEmbed})
+            ticketChannel.send({embeds: deleteEmbed})
             setTimeout(() => {ticketChannel.delete()}, 5000);
         }
 
@@ -264,7 +264,7 @@ module.exports = {
                 ]
             })
 
-            button.channel.Gsend({embeds: claimEmbed})
+            button.channel.send({embeds: claimEmbed})
         }
 
         function msToTime(ms) {
